@@ -1,0 +1,52 @@
+[
+  {
+    "name": "test_1",
+    "mesh": "inputs/test_1/mesh.glb",
+    "image": "inputs/test_1/image.png"
+  },
+  {
+    "name": "test_2",
+    "mesh": "inputs/test_2/mesh.glb",
+    "image": "inputs/test_2/image.png"
+  },
+  {
+    "name": "test_3",
+    "mesh": "inputs/test_3/mesh.glb",
+    "image": "inputs/test_3/image.png"
+  },
+  {
+    "name": "test_4",
+    "mesh": "inputs/test_4/mesh.glb",
+    "image": "inputs/test_4/image.png"
+  },
+  {
+    "name": "test_5",
+    "mesh": "inputs/test_5/mesh.glb",
+    "image": "inputs/test_5/image.png"
+  },
+  {
+    "name": "test_6",
+    "mesh": "inputs/test_6/mesh.glb",
+    "image": "inputs/test_6/image.png"
+  },
+  {
+    "name": "test_7",
+    "mesh": "inputs/test_7/mesh.glb",
+    "image": "inputs/test_7/image.png"
+  },
+  {
+    "name": "test_8",
+    "mesh": "inputs/test_8/mesh.glb",
+    "image": "inputs/test_8/image.png"
+  },
+  {
+    "name": "test_9",
+    "mesh": "inputs/test_9/mesh.glb",
+    "image": "inputs/test_9/image.png"
+  },
+  {
+    "name": "test_10",
+    "mesh": "inputs/test_10/mesh.glb",
+    "image": "inputs/test_10/image.png"
+  }
+]
