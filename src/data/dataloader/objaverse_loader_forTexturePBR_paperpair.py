@@ -10,12 +10,21 @@ from .loader_util import BaseDataset
 
 
 class TextureDatasetPaperPair(BaseDataset):
-    def __init__(self, json_path, num_view=6, image_size=512, point_light_prob=0.4, azimuth_view_count=24):
+    def __init__(
+        self,
+        json_path,
+        num_view=6,
+        image_size=512,
+        point_light_prob=0.4,
+        azimuth_view_count=24,
+        enable_augmentation=False,
+    ):
         self.data = []
         self.num_view = num_view
         self.image_size = image_size
         self.point_light_prob = point_light_prob
         self.azimuth_view_count = azimuth_view_count
+        self.enable_augmentation = enable_augmentation
         self._cond_cache = {}
         self._tex_cache = {}
 
@@ -149,6 +158,11 @@ class TextureDatasetPaperPair(BaseDataset):
             return paths
         return random.sample(paths, self.num_view)
 
+    def _maybe_augment(self, image, bg_color):
+        if not self.enable_augmentation:
+            return image
+        return self.augment_image(image, bg_color)
+
     def __getitem__(self, index):
         images_ref = []
         images_albedo = []
@@ -170,16 +184,16 @@ class TextureDatasetPaperPair(BaseDataset):
             if i == 0:
                 bg_c_record = bg_c
             image, _alpha = self.load_image(image_ref, bg_c_record)
-            images_ref.append(self.augment_image(image, bg_c_record).float())
+            images_ref.append(self._maybe_augment(image, bg_c_record).float())
 
         for image_gen in self._sample_tex_views(sample_dir):
-            images_albedo.append(self.augment_image(self.load_image(image_gen, bg_gray)[0], bg_gray))
-            images_mr.append(self.augment_image(self.load_image(image_gen.replace("_albedo", "_mr"), bg_gray)[0], bg_gray))
+            images_albedo.append(self._maybe_augment(self.load_image(image_gen, bg_gray)[0], bg_gray))
+            images_mr.append(self._maybe_augment(self.load_image(image_gen.replace("_albedo", "_mr"), bg_gray)[0], bg_gray))
             images_normal.append(
-                self.augment_image(self.load_image(image_gen.replace("_albedo", "_normal"), bg_gray)[0], bg_gray)
+                self._maybe_augment(self.load_image(image_gen.replace("_albedo", "_normal"), bg_gray)[0], bg_gray)
             )
             images_position.append(
-                self.augment_image(self.load_image(image_gen.replace("_albedo", "_pos"), bg_gray)[0], bg_gray)
+                self._maybe_augment(self.load_image(image_gen.replace("_albedo", "_pos"), bg_gray)[0], bg_gray)
             )
 
         return {
